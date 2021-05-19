@@ -4,9 +4,11 @@ import jm.task.core.jdbc.service.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Statement;
 import java.util.List;
 
 public class UserServiceTest {
+    Statement statement;
     private final UserService userService = new UserServiceImpl();
 
     private final String testName = "Ivan";
