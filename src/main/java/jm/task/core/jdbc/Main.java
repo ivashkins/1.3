@@ -11,30 +11,8 @@ import java.sql.*;
 import java.util.List;
 
 public class Main {
-    private static final String LOGIN="root";
-    private static final String PASSWORD="2021";
-    private static final String URL="jdbc:mysql://localhost:3306/firstdb?autoReconnect=true&useSSL=false";
-
     public static void main(String[] args) throws SQLException {
 
-//        session.save(new User("I","D", (byte) 21));
-//        session.save(new User("I","Di", (byte) 22));
-//        session.save(new User("I","DO", (byte) 23));
-//        session.save(new User("I","DT", (byte) 24));
-//
-//        List<User>userList=session.createQuery("from User").list();
-//        userList.forEach(System.out::println);
-//
-//        session.createQuery("TRUNCATE table User").executeUpdate();
-
-
-
-//        Connection connection;
-//        DriverManager driverManager;
-//
-//
-//        connection=DriverManager.getConnection(URL,LOGIN,PASSWORD);
-//        Statement statement=connection.createStatement();
 
         UserServiceImpl user=new UserServiceImpl();
         user.createUsersTable();
@@ -46,12 +24,15 @@ public class Main {
         System.out.println("check");
 
         List<User> users=user.getAllUsers();
-
-
         users.forEach(System.out::println);
+        user.removeUserById(1L);
+
 
         user.cleanUsersTable();
-        user.dropUsersTable();
+   //     user.dropUsersTable();
+        Util.closeHibernate();
+
+
 
 
 

@@ -1006,7 +1006,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <table id="284" parent="2" name="user"/>
     <column id="285" parent="284" name="id">
       <Position>1</Position>
-      <DataType>int|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>

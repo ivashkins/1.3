@@ -31,6 +31,9 @@ public class Util {
         }
         return null;
     }
+    public static void closeHibernate(){
+        sessionFactory.close();
+    }
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -49,7 +52,6 @@ public class Util {
 
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
-                settings.put(Environment.HBM2DDL_AUTO, "create-drop");
 
                 configuration.setProperties(settings);
 
