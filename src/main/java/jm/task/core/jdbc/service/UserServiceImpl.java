@@ -1,6 +1,7 @@
 package jm.task.core.jdbc.service;
 
 
+import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 
 import java.sql.*;
@@ -8,88 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private static final String LOGIN = "root";
-    private static final String PASSWORD = "2021";
-    private static final String URL = "jdbc:mysql://localhost:3306/firstdb?autoReconnect=true&useSSL=false";
-    private Connection connection;
-    private Statement statement;
-
-    {
-        try {
-            connection = DriverManager.getConnection(URL, LOGIN, PASSWORD);
-            statement = connection.createStatement();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
+    UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
 
 
     public void createUsersTable() {
-        try {
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS User " +
-                    "(id INTEGER not NULL AUTO_INCREMENT , " +
-                    " name VARCHAR(50), " +
-                    " lastName VARCHAR (50), " +
-                    " age INTEGER not NULL, " +
-                    " PRIMARY KEY (id))");
-
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        userDaoJDBC.createUsersTable();
     }
 
     public void dropUsersTable() {
-        try {
-            statement.execute("drop table IF EXISTS USER ");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        userDaoJDBC.dropUsersTable();
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        try {
-            PreparedStatement prst=connection.prepareStatement("INSERT INTO User VALUES (id,?,?,?)");
-            prst.setString(1, name);
-            prst.setString(2,lastName);
-            prst.setInt(3,age);
-            prst.executeUpdate();
-            System.out.println("User с именем - " + name + " добавлен в базу данных");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        userDaoJDBC.saveUser(name, lastName, age);
+
     }
 
     public void removeUserById(long id) {
-        try {
-            PreparedStatement prst=connection.prepareStatement("DELETE FROM User WHERE id (?)");
-            prst.setLong(1,id);
-            prst.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
+        userDaoJDBC.removeUserById(id);
     }
 
     public List<User> getAllUsers() {
-        List<User>userList=new ArrayList<>();
-        try {
-            ResultSet resultSet = statement.executeQuery("SELECT * from User");
-            while (resultSet.next()){
-                User user=new User(resultSet.getString("name"),resultSet.getString("lastname"), (byte) resultSet.getInt("age"));
-                userList.add(user);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return userList;
+        return userDaoJDBC.getAllUsers();
     }
 
     public void cleanUsersTable() {
-        try {
-            statement.execute("TRUNCATE table User");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
+        userDaoJDBC.cleanUsersTable();
     }
 }
