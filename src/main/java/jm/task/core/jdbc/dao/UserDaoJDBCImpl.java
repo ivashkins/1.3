@@ -9,18 +9,11 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
     private final Statement statement= Util.getStatement();
-    Connection connection;
+    private final Connection connection= statement.getConnection();
 
-    {
-        try {
-            assert statement != null;
-            connection = statement.getConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 
-    public UserDaoJDBCImpl() {
+
+    public UserDaoJDBCImpl() throws SQLException {
 
     }
     public void createUsersTable() {

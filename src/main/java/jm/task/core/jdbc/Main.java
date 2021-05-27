@@ -17,6 +17,7 @@ public class Main {
         UserServiceImpl user=new UserServiceImpl();
         user.createUsersTable();
 
+
         user.saveUser("Id","D", (byte) 21);
         user.saveUser("Ida","DI", (byte) 22);
         user.saveUser("Ia","OT", (byte) 23);
